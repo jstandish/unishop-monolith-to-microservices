@@ -1,0 +1,36 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:38000",
+      "sslPort": 44319
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWS_ACCESS_KEY_ID" : "ASIAYU33656TNGUC5QOP",
+        "AWS_SECRET_ACCESS_KEY" : "82rexKmF36VogpaglHgCGtbiMkIeEwJAZISVuKoq",
+        "AWS_SESSION_TOKEN" : "IQoJb3JpZ2luX2VjEPX//////////wEaCXVzLWVhc3QtMSJHMEUCIQDN2/54KEiWiHL3eDhQLXS0OdfWdr2WQJl6U90yYpxecQIgB4fCMcEZzpSEO41YnhhGmAAvCBzq+qVkHz1QgOfDLJ0q1wEIThAAGgw1OTQ1NzYwNzY3MTAiDLHf5GPntAmySXY2uCq0AWP1HpV5g0baq/BI5NgkevOVoRnhXWpSHYs2Ha2OY5FUzz3+rLK+C/l99NbQ1z+qinXW4zPAQfFCIUr3JzI9166sP9pePtafkhAYYqF3BWpnSkYkUSlQT1uFam3ZBBth6J4YK9byeyG3gW4nKofGfsTFf4Hf+lmzc4yGvbkym5Ox8CQyqXSYDeWsgHi2q0majMEsx9ioZdlYcwxxL4N0N3jLRmgR1EZJR+UlrYmS5B45EJw+mjC99qD2BTrjAWQqUrUsQ7dagbAcW740t3lPwrKbnSMujrBbjo6P1833umIMpwCzcQuz6aC8ywP9CdQUgszi9g1S6+ACbChqQDGuh4IwzTAhbkbPcTXE6vwIL2jI88/j1VGhtVqMEJPT221p2t08EKbS3najIi8afRSFxxGgM3Rn0M1YEuQH1Z4699gulkZGcZ1RUWiM6G/mhx5PDngIxhTxDCNapFP7mHw33TXVkrUUHVy70GOEAwW7QO62snJt1VZZAQkhVP0Fuao6moWzfwp+W5buHslpcOzeqJjzGiaNdbKWGGJtKEcQRHvy"
+      }
+    },
+    "MonoToMicroLambdaApi": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AWS_ACCESS_KEY_ID" : "ASIAYU33656TPN6G5Z7N",
+        "AWS_SECRET_ACCESS_KEY" : "dee9HAySnpopOyp44vzmJpaKTCDS0f7gMk3tZG7c",
+        "AWS_SESSION_TOKEN" : "IQoJb3JpZ2luX2VjEPf//////////wEaCXVzLWVhc3QtMSJHMEUCIQC5Djal+vsK80YsEogFuxrPOQ3oM9vA1HQf7aShPfBCwgIgPzR7Oqhsr5dsOK7BxsVdlaY+NqljEU9EeovGhNxdlYoq1wEIUBAAGgw1OTQ1NzYwNzY3MTAiDMayNUbmXjr/wqDamCq0ARCDy2eRCnRLUYE/xwx91rqFtYFpJ05vipM5FSZwIb0kNfM8+BU77RIgSg+h+QVU2V92GRQgYT8F8rT2o8SqN1FMalHRbppibQEsG7NMiWrzkCq7fR/Uq1qnfpDcMfhyO57VL8kYlghMSBtdzjmUh0AYQLSVum/O0kHcB6NAyMv8kWvxaMKvr2Xg0/8QyWhwQyJ3b4A2EwHBlePAXekF2Jboy9pmkittn8assVuZFD29MyL9EDC0raH2BTrjAbUBEA1/O584HHI3ioTlwlzj3Lkz5mCPIwba6EFx3mY2/k5cop+cxCYqbOjWT0eH7+ArRqw3xsJdG6biOe2g1DFX81uhLPlIm4T7k8HSGHGOLDrKMXJTtyGev6dib8/xqOJoYSD/Eh3DqR8h909JxbXqP5T8ml1B0+YCUyXaO3B0wp/PqNiEmi67bsdNauPZpX5empa6u023D0wQoJlsQjrc3H8q6Y1t/H32rqQAidTkuLxG52BG7ImahXCTjgteOyLUiL06Gqdt2jUUDan2f9pcW2Th+WM2ZG2TisgS0xCatJpt"
+      }
+    }
+  }
+}

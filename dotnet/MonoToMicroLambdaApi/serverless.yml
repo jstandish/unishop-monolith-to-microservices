@@ -1,0 +1,72 @@
+service: UnicornBasketService # NOTE: update this with your service name
+
+provider:
+  name: aws
+  runtime: dotnetcore3.1
+  tracing:
+    lambda: true # optional, enables tracing for all functions (can be true (true equals 'Active') 'Active' or 'PassThrough')
+
+package:
+  individually: true
+
+functions:
+  unicornBasketService:
+    role: UnicornBucketServiceRole
+    handler: MonoToMicroLambdaApi::MonoToMicroLambdaApi.LambdaEntryPoint::FunctionHandlerAsync
+    package:
+      artifact: bin/release/netcoreapp3.1/unicornBasketService.zip
+  
+resources: # CloudFormation template syntax
+  Resources:
+    UnicornBucketServiceRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /my/default/path/
+        RoleName: UnicornBucketServiceRole
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        Policies:
+          - PolicyName: dynamoDBQuery
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - 
+                  Effect: Allow # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
+                  Action:
+                    - dynamodb:GetItem
+                    - dynamodb:DeleteItem
+                    - dynamodb:PutItem
+                    - dynamodb:UpdateItem
+                    - dynamodb:Query
+                    - dynamodb:Scan
+                    - dynamodb:DescribeTable
+                    - "xray:PutTraceSegments"
+                    - "xray:PutTelemetryRecords"
+                  Resource: 
+                    - '*'
+    unishop:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: unishop_baskets_table
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: uuid
+            AttributeType: S
+          - AttributeName: unicornuuid
+            AttributeType: S
+        KeySchema:
+          - AttributeName: uuid
+            KeyType: HASH
+          - AttributeName: unicornuuid
+            KeyType: RANGE
+        Tags:
+          - Key: Name
+            Value: MonoToMicroDDBTable
