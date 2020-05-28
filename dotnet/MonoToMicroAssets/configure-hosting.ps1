@@ -15,9 +15,6 @@ Set-ExecutionPolicy Bypass -Scope Process
 #Install Git
 choco install -y git
 
-#Install .net 4.7 dev tools
-choco install -y netfx-4.6.2-devpack
-
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerRole
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServer
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-CommonHttpFeatures
@@ -65,3 +62,6 @@ md "c:\Web Sites\NewWebSite"
 
 # All on one line
 $site = $site = new-WebSite -name "NewWebSite" -PhysicalPath "c:\Web Sites\NewWebSite"  -HostHeader "*" -ApplicationPool "NewWebSiteAppPool" -force
+
+md C:\source
+git clone https://github.com/jstandish/unishop-monolith-to-microservices.git C:\source

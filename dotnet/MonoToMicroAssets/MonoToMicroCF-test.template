@@ -407,7 +407,7 @@
 										"",
 										[
 											"powershell c:\\cfn\\deploy-database.ps1",
-											"--database test"
+											" --database test"
 										]
 									]
 								}
