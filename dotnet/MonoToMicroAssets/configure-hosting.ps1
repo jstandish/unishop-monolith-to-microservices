@@ -49,21 +49,19 @@ Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ISAPIFilter
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpCompressionStatic
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ASPNET45
 
+Import-Module WebAdministration
+
 # Create app pool
 New-WebAppPool -name "NewWebSiteAppPool"  -force
 
-$appPool = Get-Item -name "NewWebSiteAppPool" 
+$appPool = Get-Item IIS:\AppPools\NewWebSiteAppPool
 $appPool.processModel.identityType = "NetworkService"
 $appPool.enable32BitAppOnWin64 = 1
 $appPool | Set-Item
 
-
+Stop-WebSite -Name "Default Web Site"
 # Create Website
 md "c:\Web Sites\NewWebSite"
 
 # All on one line
-$site = $site = new-WebSite -name "NewWebSite" 
-                            -PhysicalPath "c:\Web Sites\NewWebSite" 
-                            -HostHeader "*.amazonaws.com"
-                            -ApplicationPool "NewWebSiteAppPool" 
-                            -force
+$site = $site = new-WebSite -name "NewWebSite" -PhysicalPath "c:\Web Sites\NewWebSite"  -HostHeader "*" -ApplicationPool "NewWebSiteAppPool" -force
