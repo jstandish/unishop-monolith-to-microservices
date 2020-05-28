@@ -1,14 +1,12 @@
 {
 	"AWSTemplateFormatVersion": "2010-09-09",
-	"Metadata": {
-
-	},
+	"Metadata": {},
 	"Parameters": {
-		  "LatestAmiId":{
-            "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
-            "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2",
-						"Description" : "Use an AMI of your choosing, we recommend to use the latest available"
-	    }
+		"LatestAmiId": {
+			"Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+			"Default": "/aws/service/ami-windows-latest/Windows_Server-2019-English-Full-Base",
+			"Description": "Use an AMI of your choosing, we recommend to use the latest available"
+		}
 	},
 	"Resources": {
 		"MonoToMicroVPC": {
@@ -18,19 +16,23 @@
 				"EnableDnsSupport": "true",
 				"EnableDnsHostnames": "true",
 				"InstanceTenancy": "default",
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicro"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicro"
+					}
+				]
 			}
 		},
 		"MonoToMicroIGW": {
 			"Type": "AWS::EC2::InternetGateway",
 			"Properties": {
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroIGW"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroIGW"
+					}
+				]
 			}
 		},
 		"AttachGateway": {
@@ -62,10 +64,12 @@
 					]
 				},
 				"MapPublicIpOnLaunch": "true",
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroSubnet1"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroSubnet1"
+					}
+				]
 			}
 		},
 		"MonoToMicroSubnet2": {
@@ -86,10 +90,12 @@
 					]
 				},
 				"MapPublicIpOnLaunch": "true",
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroSubnet2"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroSubnet2"
+					}
+				]
 			}
 		},
 		"MonoToMicroPublicRoutTable": {
@@ -98,10 +104,12 @@
 				"VpcId": {
 					"Ref": "MonoToMicroVPC"
 				},
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroPublicRoutTable"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroPublicRoutTable"
+					}
+				]
 			}
 		},
 		"MonoToMicroPublicRout": {
@@ -146,27 +154,36 @@
 				"VpcId": {
 					"Ref": "MonoToMicroVPC"
 				},
-				"SecurityGroupIngress": [{
-					"IpProtocol": "tcp",
-					"FromPort": 3306,
-					"ToPort": 3306,
-					"SourceSecurityGroupId": { "Ref": "EC2SecurityGroup" }
-				}],
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroDBSG"
-				}]
+				"SecurityGroupIngress": [
+					{
+						"IpProtocol": "tcp",
+						"FromPort": 1433,
+						"ToPort": 1433,
+						"SourceSecurityGroupId": {
+							"Ref": "EC2SecurityGroup"
+						}
+					}
+				],
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroDBSG"
+					}
+				]
 			}
 		},
 		"DBSubnetGroup": {
 			"Type": "AWS::RDS::DBSubnetGroup",
 			"Properties": {
 				"DBSubnetGroupDescription": "MonoToMicroDBSubnetGroup",
-				"SubnetIds": [{
-					"Ref": "MonoToMicroSubnet1"
-				}, {
-					"Ref": "MonoToMicroSubnet2"
-				}]
+				"SubnetIds": [
+					{
+						"Ref": "MonoToMicroSubnet1"
+					},
+					{
+						"Ref": "MonoToMicroSubnet2"
+					}
+				]
 			}
 		},
 		"EC2SecurityGroup": {
@@ -204,29 +221,37 @@
 						"CidrIp": "0.0.0.0/0"
 					}
 				],
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroEC2SG"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroEC2SG"
+					}
+				]
 			}
 		},
 		"EC2SecurityGroupDBRule": {
 			"Type": "AWS::EC2::SecurityGroupEgress",
 			"Properties": {
-				"GroupId": { "Ref": "EC2SecurityGroup" },
+				"GroupId": {
+					"Ref": "EC2SecurityGroup"
+				},
 				"IpProtocol": "tcp",
 				"FromPort": 3306,
 				"ToPort": 3306,
-				"DestinationSecurityGroupId": { "Ref": "DBSecurityGroup" }
+				"DestinationSecurityGroupId": {
+					"Ref": "DBSecurityGroup"
+				}
 			}
 		},
 		"S3InstanceProfile": {
 			"Type": "AWS::IAM::InstanceProfile",
 			"Properties": {
 				"Path": "/",
-				"Roles": [{
-					"Ref": "S3Role"
-				}]
+				"Roles": [
+					{
+						"Ref": "S3Role"
+					}
+				]
 			}
 		},
 		"S3Policy": {
@@ -234,30 +259,66 @@
 			"Properties": {
 				"PolicyName": "S3Policy",
 				"PolicyDocument": {
-					"Statement": [{
-						"Effect": "Allow",
-						"Action": [
-							"s3:GetBucketLocation",
-							"s3:GetObject",
-							"s3:GetObjectAcl",
-							"s3:PutObject",
-							"s3:PutObjectAcl"
-						],
-						"Resource": [
-							{ "Fn::GetAtt": [ "UIBucket", "Arn" ] },
-							{ "Fn::GetAtt": [ "AssetBucket", "Arn" ] },
-							{ "Fn::Join": [ "", 
-								[ { "Fn::GetAtt": [ "UIBucket", "Arn" ] }, "/*" ]
-							] },
-							{ "Fn::Join": [ "", 
-								[ { "Fn::GetAtt": [ "AssetBucket", "Arn" ] }, "/*" ]						
-							] }
-						]
-					}]
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"s3:GetBucketLocation",
+								"s3:GetObject",
+								"s3:GetObjectAcl",
+								"s3:PutObject",
+								"s3:PutObjectAcl"
+							],
+							"Resource": [
+								{
+									"Fn::GetAtt": [
+										"UIBucket",
+										"Arn"
+									]
+								},
+								{
+									"Fn::GetAtt": [
+										"AssetBucket",
+										"Arn"
+									]
+								},
+								{
+									"Fn::Join": [
+										"",
+										[
+											{
+												"Fn::GetAtt": [
+													"UIBucket",
+													"Arn"
+												]
+											},
+											"/*"
+										]
+									]
+								},
+								{
+									"Fn::Join": [
+										"",
+										[
+											{
+												"Fn::GetAtt": [
+													"AssetBucket",
+													"Arn"
+												]
+											},
+											"/*"
+										]
+									]
+								}
+							]
+						}
+					]
 				},
-				"Roles": [{
-					"Ref": "S3Role"
-				}]
+				"Roles": [
+					{
+						"Ref": "S3Role"
+					}
+				]
 			}
 		},
 		"S3Role": {
@@ -265,15 +326,19 @@
 			"Properties": {
 				"AssumeRolePolicyDocument": {
 					"Version": "2012-10-17",
-					"Statement": [{
-						"Effect": "Allow",
-						"Principal": {
-							"Service": ["ec2.amazonaws.com"]
-						},
-						"Action": [
-							"sts:AssumeRole"
-						]
-					}]
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Principal": {
+								"Service": [
+									"ec2.amazonaws.com"
+								]
+							},
+							"Action": [
+								"sts:AssumeRole"
+							]
+						}
+					]
 				},
 				"Path": "/"
 			}
@@ -281,37 +346,40 @@
 		"DBInstance": {
 			"Type": "AWS::RDS::DBInstance",
 			"DeletionPolicy": "Delete",
-
 			"Properties": {
 				"DBName": "MonoToMicroDB",
 				"DBInstanceIdentifier": "MonoToMicroDB",
-				"Engine": "MySQL",
+				"Engine": "sqlserver-ex",
 				"DBInstanceClass": "db.t2.micro",
-				"Port": "3306",
+				"Port": "1433",
 				"MasterUsername": "MonoToMicroUser",
 				"MasterUserPassword": "MonoToMicroPassword",
-				"VPCSecurityGroups": [{
-					"Ref": "DBSecurityGroup"
-				}],
+				"VPCSecurityGroups": [
+					{
+						"Ref": "DBSecurityGroup"
+					}
+				],
 				"AllocatedStorage": "5",
 				"DBSubnetGroupName": {
 					"Ref": "DBSubnetGroup"
 				},
 				"MultiAZ": "false",
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroDB"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroDB"
+					}
+				]
 			}
 		},
 		"UIBucket": {
-		    "Type": "AWS::S3::Bucket",
-		    "Properties": {
-		        "WebsiteConfiguration": {
-		          "ErrorDocument": "error.html",
-		          "IndexDocument": "index.html"
-		        }
-		    }
+			"Type": "AWS::S3::Bucket",
+			"Properties": {
+				"WebsiteConfiguration": {
+					"ErrorDocument": "error.html",
+					"IndexDocument": "index.html"
+				}
+			}
 		},
 		"AssetBucket": {
 			"Type": "AWS::S3::Bucket"
@@ -325,72 +393,137 @@
 					"Timeout": "PT30M"
 				}
 			},
+			"Metadata": {
+				"AWS::CloudFormation::Init": {
+					"config": {
+						"files": {
+							"c:\\cfn\\configure-hosting.ps1": {
+								"source": "https://raw.githubusercontent.com/jstandish/unishop-monolith-to-microservices/master/dotnet/MonoToMicroAssets/configure-hosting.ps1"
+							},
+							"c:\\cfn\\deploy-database.ps1": {
+								"source": "https://raw.githubusercontent.com/jstandish/unishop-monolith-to-microservices/master/dotnet/MonoToMicroAssets/deploy-database.ps1"
+							},
+							"c:\\cfn\\deploy-website.ps1": {
+								"source": "https://raw.githubusercontent.com/jstandish/unishop-monolith-to-microservices/master/dotnet/MonoToMicroAssets/deploy-website.ps1"
+							},
+							"c:\\cfn\\cfn-hup.conf": {
+								"content": {
+									"Fn::Join": [
+										"",
+										[
+											"[main]\n",
+											"stack=",
+											{
+												"Ref": "AWS::StackId"
+											},
+											"\n",
+											"region=",
+											{
+												"Ref": "AWS::Region"
+											},
+											"\n"
+										]
+									]
+								}
+							}
+						}
+					},
+					"commands": {
+						"1-install-website": {
+							"Fn::Join": [
+								"",
+								"ps1 c:\\cfn\\configure-hosting.ps1"
+							]
+						},
+						"2-deploy-database": {
+							"Fn::Join": [
+								"",
+								"ps1 c:\\cfn\\deploy-database.ps1",
+								"--database ",
+								{
+									"Fn::GetAtt": [
+										"DBInstance",
+										"Endpoint.Address"
+									]
+								}
+							]
+						},
+						"3-deploy-website": {
+							"Fn::Join": [
+								"",
+								"ps1 c:\\cfn\\deploy-website.ps1"
+							]
+						}
+					}
+				}
+			},
 			"Properties": {
 				"InstanceType": "t2.micro",
 				"ImageId": {
 					"Ref": "LatestAmiId"
-    		    },
+				},
 				"SubnetId": {
 					"Ref": "MonoToMicroSubnet1"
 				},
-				"SecurityGroupIds": [{
-					"Ref": "EC2SecurityGroup"
-				}],
+				"SecurityGroupIds": [
+					{
+						"Ref": "EC2SecurityGroup"
+					}
+				],
 				"IamInstanceProfile": {
 					"Ref": "S3InstanceProfile"
 				},
 				"UserData": {
 					"Fn::Base64": {
-						"Fn::Join": ["",
+						"Fn::Join": [
+							"",
 							[
-								"#!/bin/bash\n",
-								"Database=", {
-									"Fn::GetAtt": ["DBInstance", "Endpoint.Address"]
-								}, "\n",
-								"sudo yum update -y\n",
-								"sudo yum -y install mysql\n",
-								"sudo yum -y install java-1.8.0-openjdk-devel\n",
-								"sudo yum -y install unzip\n",
-								"sudo yum install git -y\n",
-								"git clone https://github.com/aws-samples/unishop-monolith-to-microservices.git /home/ec2-user/MonoToMicro\n",
-								"sudo mysql -u MonoToMicroUser -h", {
-									"Fn::GetAtt": ["DBInstance", "Endpoint.Address"]
-								}, " -P 3306 -pMonoToMicroPassword < /home/ec2-user/MonoToMicro/MonoToMicroLegacy/database/create_tables.sql\n",
-								"export MONO_TO_MICRO_DB_ENDPOINT=", {
-									"Fn::GetAtt": ["DBInstance", "Endpoint.Address"]
-								}, "\n",
-								"cd /home/ec2-user/\n",
-								"sudo wget https://services.gradle.org/distributions/gradle-5.6.3-bin.zip\n",
-								"sudo unzip -d /home/ec2-user/ /home/ec2-user/gradle-5.6.3-bin.zip\n",
-								"export PATH=$PATH:/home/ec2-user/gradle-5.6.3/bin\n",
-								"cd /home/ec2-user/MonoToMicro/MonoToMicroLegacy\n",
-								"gradle clean build\n",
-								"cd /home/ec2-user/MonoToMicro/MonoToMicroLambda\n",
-								"gradle clean build\n",
-								"AWS_DEFAULT_REGION=", {
+								"$MONO_TO_MICRO_DB_ENDPOINT=",
+								{
+									"Fn::GetAtt": [
+										"DBInstance",
+										"Endpoint.Address"
+									]
+								},
+								"\n",
+								"$AWS_DEFAULT_REGION=",
+								{
 									"Ref": "AWS::Region"
-								}, "\n",
-								"UI_RANDOM_NAME=", {
+								},
+								";",
+								"$UI_RANDOM_NAME=",
+								{
 									"Ref": "UIBucket"
-								}, "\n",
-								"ASSETS_RANDOM_NAME=", {
+								},
+								";",
+								"$ASSETS_RANDOM_NAME=",
+								{
 									"Ref": "AssetBucket"
-								}, "\n",
+								},
+								";",
 								"aws s3 cp /home/ec2-user/MonoToMicro/MonoToMicroUI s3://$UI_RANDOM_NAME/ --recursive --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers\n",
 								"aws s3 cp /home/ec2-user/MonoToMicro/MonoToMicroLambda/build/libs s3://$ASSETS_RANDOM_NAME/ --recursive --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers\n",
-								"java -jar /home/ec2-user/MonoToMicro/MonoToMicroLegacy/build/libs/MonoToMicroLegacy-0.0.1-SNAPSHOT.jar &\n",
-								"/opt/aws/bin/cfn-signal -e $?",
-									" --stack ", { "Ref": "AWS::StackName" },
-									" --resource EC2Instance",
-									" --region ", { "Ref" : "AWS::Region" }, "\n"
+								"cfn-signal.exe -e $?",
+								" --stack ",
+								{
+									"Ref": "AWS::StackName"
+								},
+								" --resource EC2Instance",
+								" --region ",
+								{
+									"Ref": "AWS::Region"
+								},
+								"\n"
 							]
 						]
 					}
 				},
-				"Tags": [{
-					"Key": "Name",
-					"Value": "MonoToMicroEC2"
-				}]
+				"Tags": [
+					{
+						"Key": "Name",
+						"Value": "MonoToMicroEC2"
+					}
+				]
 			}
 		}
 	},
@@ -402,7 +535,10 @@
 					[
 						"http:/",
 						{
-							"Fn::GetAtt": ["EC2Instance", "PublicDnsName"]
+							"Fn::GetAtt": [
+								"EC2Instance",
+								"PublicDnsName"
+							]
 						}
 					]
 				]
@@ -410,11 +546,15 @@
 			"Description": "Server Public DNS"
 		},
 		"AssetBucket": {
-			"Value": { "Ref": "AssetBucket" },
+			"Value": {
+				"Ref": "AssetBucket"
+			},
 			"Description": "S3 Bucket containing the compiled Lambda function"
 		},
 		"UIBucket": {
-			"Value": { "Ref": "UIBucket" },
+			"Value": {
+				"Ref": "UIBucket"
+			},
 			"Description": "S3 Bucket containing the UniShop website"
 		}
 	}
