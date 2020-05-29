@@ -1,2 +1,2 @@
 #TODO: Compile Application
-cp "C:\source\MonoToMicroLegacy\app.publish" "c:\Web Sites\NewWebSite" 
+robocopy /S "C:\source\dotnet\MonoToMicroLegacy\app.publish" "c:\Web Sites\NewWebSite" 

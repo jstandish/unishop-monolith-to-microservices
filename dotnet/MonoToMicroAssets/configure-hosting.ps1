@@ -15,51 +15,53 @@ Set-ExecutionPolicy Bypass -Scope Process
 #Install Git
 choco install -y git
 
+choco install -y msdeploy
+
 #Install donet 4.7.2
-choco install -y dotnet4.7.2
+# choco install -y dotnet4.7.2
 
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerRole
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServer
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-CommonHttpFeatures
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpErrors
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpRedirect
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ApplicationDevelopment
-Enable-WindowsOptionalFeature -online -NoRestart -FeatureName NetFx4Extended-ASPNET45
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-NetFxExtensibility45
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HealthAndDiagnostics
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpLogging
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-LoggingLibraries
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-RequestMonitor
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpTracing
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Security
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-RequestFiltering
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Performance
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerManagementTools
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-IIS6ManagementCompatibility
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Metabase
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ManagementConsole
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-BasicAuthentication
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WindowsAuthentication
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-StaticContent
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-DefaultDocument
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebSockets
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ApplicationInit
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ISAPIExtensions
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ISAPIFilter
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpCompressionStatic
-Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ASPNET45
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerRole
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServer
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-CommonHttpFeatures
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpErrors
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpRedirect
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ApplicationDevelopment
+# Enable-WindowsOptionalFeature -online -NoRestart -FeatureName NetFx4Extended-ASPNET45
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-NetFxExtensibility45
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HealthAndDiagnostics
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpLogging
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-LoggingLibraries
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-RequestMonitor
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpTracing
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Security
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-RequestFiltering
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Performance
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerManagementTools
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-IIS6ManagementCompatibility
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-Metabase
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ManagementConsole
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-BasicAuthentication
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WindowsAuthentication
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-StaticContent
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-DefaultDocument
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebSockets
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ApplicationInit
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ISAPIExtensions
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ISAPIFilter
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-HttpCompressionStatic
+# Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-ASPNET45
 
-Import-Module WebAdministration
+# Import-Module WebAdministration
 
-# Create app pool
-New-WebAppPool -name "NewWebSiteAppPool"  -force
+# # Create app pool
+# New-WebAppPool -name "NewWebSiteAppPool"  -force
 
-$appPool = Get-Item IIS:\AppPools\NewWebSiteAppPool
-$appPool.processModel.identityType = "NetworkService"
-$appPool.enable32BitAppOnWin64 = 1
-$appPool | Set-Item
+# $appPool = Get-Item IIS:\AppPools\NewWebSiteAppPool
+# $appPool.processModel.identityType = "NetworkService"
+# $appPool.enable32BitAppOnWin64 = 1
+# $appPool | Set-Item
 
-Stop-WebSite -Name "Default Web Site"
+#Stop-WebSite -Name "Default Web Site"
 # Create Website
 md "c:\Web Sites\NewWebSite"
 
