@@ -4,7 +4,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\jsstand\Source\Repos\unishop-monolith-to-microservices\dotnet\MonoToMicroLegacy\bin\app.publish\</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\jsstand\Source\Repos\unishop-monolith-to-microservices\dotnet\MonoToMicroLegacy\app.publish\</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -41,10 +41,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/25/2012 11:48:56</publishTime>
     </File>
     <File Include="bin/MonoToMicroLegacy.dll">
-      <publishTime>05/28/2020 18:48:20</publishTime>
+      <publishTime>05/28/2020 19:33:52</publishTime>
     </File>
     <File Include="bin/MonoToMicroLegacy.pdb">
-      <publishTime>05/28/2020 18:48:20</publishTime>
+      <publishTime>05/28/2020 19:33:52</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>11/09/2019 00:56:44</publishTime>
