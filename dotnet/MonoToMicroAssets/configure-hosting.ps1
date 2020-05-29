@@ -64,4 +64,4 @@ md "c:\Web Sites\NewWebSite"
 $site = $site = new-WebSite -name "NewWebSite" -PhysicalPath "c:\Web Sites\NewWebSite"  -HostHeader "*" -ApplicationPool "NewWebSiteAppPool" -force
 
 md C:\source
-git clone https://github.com/jstandish/unishop-monolith-to-microservices.git C:\source
+."C:\Program Files\Git\bin\git.exe" clone https://github.com/jstandish/unishop-monolith-to-microservices.git C:\source
