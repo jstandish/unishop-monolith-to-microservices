@@ -15,6 +15,9 @@ Set-ExecutionPolicy Bypass -Scope Process
 #Install Git
 choco install -y git
 
+#Install donet 4.7.2
+choco install -y dotnet4.7.2
+
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServerRole
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-WebServer
 Enable-WindowsOptionalFeature -Online -NoRestart -FeatureName IIS-CommonHttpFeatures
