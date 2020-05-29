@@ -1,2 +1,2 @@
 #TODO: Compile Application
-choco install -y visualstudio2017buildtools
+cp "C:\source\MonoToMicroLegacy\app.publish" "c:\Web Sites\NewWebSite" 
